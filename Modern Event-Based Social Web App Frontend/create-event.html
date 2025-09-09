@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event - EventHub</title>
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/create-event.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="{% url 'base:main' %}" class="nav-link active">Home</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Discover</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Create Event</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="nav-auth">
+        <a href="profile.html" class="profile-link">
+          {% if user.profile.picture %}
+        <img src="{{ user.profile.picture.url }}" alt="Profile" class="profile-avatar">
+          {% else %}
+        <a href="{% url 'accounts:profile' %}">
+          <i class="fas fa-user-circle profile-icon" style="font-size:3rem;"></i>
+        </a>
+          {% endif %}
+        </a>
+      </div>
+      {% else %}
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      {% endif %}
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+  <main class="create-event-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>Create New Event</h1>
+        <p>Bring people together around shared interests and experiences</p>
+      </div>
+
+      <form class="event-form">
+        <div class="form-sections">
+          <section class="form-section">
+            <h2>Basic Information</h2>
+            
+            <div class="form-group">
+              <label for="event-title">Event Title *</label>
+              <input type="text" id="event-title" name="title" placeholder="Give your event a catchy title" required>
+            </div>
+
+            <div class="form-group">
+              <label for="event-description">Description *</label>
+              <textarea id="event-description" name="description" rows="4" placeholder="Describe what your event is about, what to expect, and any requirements..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="event-category">Category *</label>
+              <select id="event-category" name="category" required>
+                <option value="">Select a category</option>
+                <option value="sports">Sports</option>
+                <option value="gaming">Gaming</option>
+                <option value="study">Study Groups</option>
+                <option value="social">Social</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="outdoor">Outdoor</option>
+                <option value="food">Food & Drinks</option>
+                <option value="arts">Arts & Culture</option>
+                <option value="fitness">Fitness & Wellness</option>
+                <option value="tech">Technology</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="event-image">Cover Image</label>
+              <div class="image-upload">
+                <div class="upload-area">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p>Click to upload or drag and drop</p>
+                  <span>PNG, JPG up to 5MB</span>
+                </div>
+                <input type="file" id="event-image" name="image" accept="image/*">
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Date & Location</h2>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="event-date">Date *</label>
+                <input type="date" id="event-date" name="date" required>
+              </div>
+              <div class="form-group">
+                <label for="event-time">Time *</label>
+                <input type="time" id="event-time" name="time" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="event-location">Location *</label>
+              <div class="location-input">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="event-location" name="location" placeholder="Enter address or venue name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Map Preview</label>
+              <div class="map-placeholder">
+                <i class="fas fa-map"></i>
+                <p>Map will appear here after entering location</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Attendee Settings</h2>
+            
+            <div class="form-group">
+              <label for="max-attendees">Maximum Attendees *</label>
+              <input type="number" id="max-attendees" name="maxAttendees" min="2" max="500" placeholder="e.g., 20" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="min-age">Minimum Age</label>
+                <input type="number" id="min-age" name="minAge" min="13" max="100" placeholder="18">
+              </div>
+              <div class="form-group">
+                <label for="max-age">Maximum Age</label>
+                <input type="number" id="max-age" name="maxAge" min="13" max="100" placeholder="35">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Gender Balance</label>
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="genderBalance" value="any" checked>
+                  <span class="radio-mark"></span>
+                  Any
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="genderBalance" value="mixed">
+                  <span class="radio-mark"></span>
+                  Mixed (Balanced)
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="genderBalance" value="male-only">
+                  <span class="radio-mark"></span>
+                  Male Only
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="genderBalance" value="female-only">
+                  <span class="radio-mark"></span>
+                  Female Only
+                </label>
+              </div>
+            </div>
+
+            <div class="gender-balance-details" style="display: none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="male-spots">Male Spots</label>
+                  <input type="number" id="male-spots" name="maleSpots" min="0" placeholder="10">
+                </div>
+                <div class="form-group">
+                  <label for="female-spots">Female Spots</label>
+                  <input type="number" id="female-spots" name="femaleSpots" min="0" placeholder="10">
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Additional Settings</h2>
+            
+            <div class="form-group">
+              <label>Event Visibility</label>
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="visibility" value="public" checked>
+                  <span class="radio-mark"></span>
+                  Public - Anyone can find and join
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="visibility" value="private">
+                  <span class="radio-mark"></span>
+                  Private - Invite only
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Join Approval</label>
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="approval" value="automatic" checked>
+                  <span class="radio-mark"></span>
+                  Automatic - People can join instantly
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="approval" value="manual">
+                  <span class="radio-mark"></span>
+                  Manual - You approve each request
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" name="features" value="chat">
+                  <span class="checkmark"></span>
+                  Enable event chat
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="features" value="photos">
+                  <span class="checkmark"></span>
+                  Allow photo sharing
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="features" value="updates">
+                  <span class="checkmark"></span>
+                  Send event updates to attendees
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="special-requirements">Special Requirements</label>
+              <textarea id="special-requirements" name="requirements" rows="3" placeholder="Any special requirements, items to bring, or additional information..."></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary">Save as Draft</button>
+          <button type="submit" class="btn-primary">Create Event</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="discover.html">Discover Events</a></li>
+            <li><a href="create-event.html">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

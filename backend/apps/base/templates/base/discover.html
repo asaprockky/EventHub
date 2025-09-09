@@ -1,0 +1,333 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Events - EventHub</title>
+<link rel="stylesheet" href="{% static 'base/discover.css' %}">
+<link rel="stylesheet" href="{% static 'base/global.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+ <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="{% url 'base:main' %}" class="nav-link active">Home</a>
+        <a href="{% url 'base:discover' %}" class="nav-link">Discover</a>
+        <a href="{% url 'base:create_event' %}" class="nav-link">Create Event</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="nav-auth">
+        <a href="profile.html" class="profile-link">
+          {% if user.profile.picture %}
+        <img src="{{ user.profile.picture.url }}" alt="Profile" class="profile-avatar">
+          {% else %}
+        <a href="{% url 'accounts:profile' %}">
+          <i class="fas fa-user-circle profile-icon" style="font-size:3rem;"></i>
+        </a>
+          {% endif %}
+        </a>
+      </div>
+      {% else %}
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      {% endif %}
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <main class="discover-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>Discover Events</h1>
+        <p>Find events that match your interests and connect with your community</p>
+      </div>
+
+      <div class="discover-content">
+        <aside class="filters-sidebar">
+          <div class="filter-section">
+            <h3>Filters</h3>
+            
+            <div class="filter-group">
+              <label>Search</label>
+              <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search events...">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Category</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" checked>
+                  <span class="checkmark"></span>
+                  Sports
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Gaming
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Study Groups
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Social
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Entertainment
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Outdoor
+                </label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Age Range</label>
+              <div class="range-inputs">
+                <input type="number" placeholder="Min" min="18" max="65" value="18">
+                <span>to</span>
+                <input type="number" placeholder="Max" min="18" max="65" value="35">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Gender Balance</label>
+              <select>
+                <option value="">Any</option>
+                <option value="mixed">Mixed</option>
+                <option value="male-only">Male Only</option>
+                <option value="female-only">Female Only</option>
+                <option value="balanced">Balanced (50/50)</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Location</label>
+              <div class="search-input">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" placeholder="Enter location...">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Date</label>
+              <select>
+                <option value="">Any time</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+                <option value="this-week">This week</option>
+                <option value="this-month">This month</option>
+              </select>
+            </div>
+
+            <button class="btn-primary filter-apply">Apply Filters</button>
+            <button class="btn-text filter-clear">Clear All</button>
+          </div>
+        </aside>
+
+       <div class="events-content">
+                <div class="content-header">
+                    <div class="results-info">
+                        <span>{{ events|length }} events found</span>
+                    </div>
+                    <div class="view-controls">
+              <div class="sort-select">
+                <select>
+                  <option value="date">Sort by Date</option>
+                  <option value="popularity">Most Popular</option>
+                  <option value="distance">Nearest</option>
+                  <option value="newest">Newest</option>
+                </select>
+              </div>
+              <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">
+                  <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+                </div>
+
+                <div class="events-grid">
+                    {% for event in events %}
+                    <div class="event-card">
+                        <div class="event-image">
+                            {% if event.image %}
+                                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="image-placeholder">
+                            {% else %}
+                                <div class="image-placeholder">
+                                    {% if event.category == "Sports" %}
+                                        <i class="fas fa-football-ball"></i>
+                                    {% elif event.category == "Gaming" %}
+                                        <i class="fas fa-gamepad"></i>
+                                    {% elif event.category == "Study Groups" %}
+                                        <i class="fas fa-book"></i>
+                                    {% elif event.category == "Social" %}
+                                        <i class="fas fa-coffee"></i>
+                                    {% elif event.category == "Entertainment" %}
+                                        <i class="fas fa-music"></i>
+                                    {% elif event.category == "Outdoor" %}
+                                        <i class="fas fa-hiking"></i>
+                                    {% else %}
+                                        <i class="fas fa-calendar"></i>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="event-category">{{ event.category }}</div>
+                            <div class="event-bookmark">
+                                <i class="far fa-heart"></i>
+                            </div>
+                        </div>
+                        <div class="event-content">
+                            <h3>{{ event.title }}</h3>
+                            <div class="event-meta">
+                                <div class="event-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>{{ event.date}}</span>
+                                </div>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>{{ event.location }}</span>
+                                </div>
+                            </div>
+                            <div class="event-stats">
+                                <span class="attendees">{{ event.attendees_count|add:"3" }}/{{ event.max_attendees }} joined</span>
+                                <span class="age-range">{{ event.min_age }}-{{ event.max_age }} years</span>
+                                <span class="gender-balance">{{ event.gender_balance }}</span>
+                            </div>
+                            <div class="event-organizer">
+                                <div class="organizer-avatar">
+                                    {% if event.organizer.profile.picture %}
+                                        <img src="{{ event.organizer.profile.picture.url }}" alt="Organizer" class="profile-avatar">
+                                    {% else %}
+                                        <i class="fas fa-user"></i>
+                                        
+                                    {% endif %}
+                                </div>
+                                <span>by {{ event.created_by.username }}</span>
+                            </div>
+                            <a href="{% url 'base:event_details' event.id %}" class="btn-primary btn-small">View Details</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No events found.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="pagination">
+                    <!-- You can implement pagination here using Django's pagination context -->
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="page-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    {% else %}
+                        <button class="page-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <button class="page-btn active">{{ num }}</button>
+                        {% else %}
+                            <a href="?page={{ num }}" class="page-btn">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    {% else %}
+                        <button class="page-btn" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+
+          <div class="pagination">
+            <button class="page-btn" disabled>
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-dots">...</span>
+            <button class="page-btn">8</button>
+            <button class="page-btn">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="discover.html">Discover Events</a></li>
+            <li><a href="create-event.html">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventHub - Connect Through Events</title>
+<link rel="stylesheet" href="{% static 'base/home.css' %}">
+<link rel="stylesheet" href="{% static 'base/global.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Add to styles/global.css or home.css */
+    .animate-hero { animation: fadeInDown 1s cubic-bezier(.4,0,.2,1) both; }
+    .fade-in-up { opacity: 1 !important; transform: translateY(0) !important; transition: all 0.7s cubic-bezier(.4,0,.2,1); }
+    .category-card, .event-card, .step { opacity: 0; transform: translateY(40px); }
+    .category-card.hovered, .event-card.hovered { box-shadow: 0 8px 32px rgba(0,0,0,0.12); transform: scale(1.04); transition: box-shadow 0.3s, transform 0.3s; }
+    @keyframes fadeInDown { from { opacity:0; transform:translateY(-40px);} to { opacity:1; transform:translateY(0);} }
+    .social-links a.icon-bounce { animation: bounce 0.5s; }
+    @keyframes bounce { 0%{transform:translateY(0);} 30%{transform:translateY(-8px);} 60%{transform:translateY(0);} 100%{transform:translateY(-2px);} }
+    .nav-links.nav-open { display: block !important; animation: fadeInDown 0.4s; }
+    .mobile-menu-toggle.open i { color: #007bff; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="{% url 'base:main' %}" class="nav-link active">Home</a>
+        <a href="{% url 'base:discover' %}" class="nav-link">Discover</a>
+        <a href="{% url 'base:create_event' %}" class="nav-link">Create Event</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="nav-auth">
+        <a href="profile.html" class="profile-link">
+          {% if user.profile.picture %}
+        <img src="{{ user.profile.picture.url }}" alt="Profile" class="profile-avatar">
+          {% else %}
+        <a href="{% url 'accounts:profile' %}">
+          <i class="fas fa-user-circle profile-icon" style="font-size:3rem;"></i>
+        </a>
+          {% endif %}
+        </a>
+      </div>
+      {% else %}
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      {% endif %}
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Connect Through Shared Experiences</h1>
+        <p>Discover amazing events, meet like-minded people, and create unforgettable memories in your city.</p>
+        <div class="hero-actions">
+          <a href="{% url 'base:discover' %}" class="btn-primary btn-large">Explore Events</a>
+          <a href="{% url 'base:create_event' %}" class="btn-secondary btn-large">Create Event</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-placeholder">
+          <i class="fas fa-users"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories">
+      <div class="container">
+        <h2>Popular Categories</h2>
+        <div class="category-grid">
+          <div class="category-card">
+            <i class="fas fa-football-ball"></i>
+            <h3>Sports</h3>
+            <p>Join football, basketball, tennis and more</p>
+          </div>
+          <div class="category-card">
+            <i class="fas fa-gamepad"></i>
+            <h3>Gaming</h3>
+            <p>Board games, video games, tournaments</p>
+          </div>
+          <div class="category-card">
+            <i class="fas fa-book"></i>
+            <h3>Study Groups</h3>
+            <p>Learn together, share knowledge</p>
+          </div>
+          <div class="category-card">
+            <i class="fas fa-coffee"></i>
+            <h3>Social</h3>
+            <p>Coffee meetups, networking events</p>
+          </div>
+          <div class="category-card">
+            <i class="fas fa-music"></i>
+            <h3>Entertainment</h3>
+            <p>Concerts, movies, cultural events</p>
+          </div>
+          <div class="category-card">
+            <i class="fas fa-hiking"></i>
+            <h3>Outdoor</h3>
+            <p>Hiking, camping, adventure activities</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-events">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Events</h2>
+          <a href="{% url 'base:discover' %}" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="events-grid">
+          <div class="event-card">
+            <div class="event-image">
+              <div class="image-placeholder">
+                <i class="fas fa-football-ball"></i>
+              </div>
+              <div class="event-category">Sports</div>
+            </div>
+            <div class="event-content">
+              <h3>Weekend Football Match</h3>
+              <div class="event-meta">
+                <div class="event-date">
+                  <i class="fas fa-calendar"></i>
+                  <span>Dec 15, 2024</span>
+                </div>
+                <div class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Central Park</span>
+                </div>
+              </div>
+              <div class="event-stats">
+                <span class="attendees">12/20 joined</span>
+                <span class="age-range">18-30 years</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image">
+              <div class="image-placeholder">
+                <i class="fas fa-gamepad"></i>
+              </div>
+              <div class="event-category">Gaming</div>
+            </div>
+            <div class="event-content">
+              <h3>Board Game Night</h3>
+              <div class="event-meta">
+                <div class="event-date">
+                  <i class="fas fa-calendar"></i>
+                  <span>Dec 18, 2024</span>
+                </div>
+                <div class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Game Café</span>
+                </div>
+              </div>
+              <div class="event-stats">
+                <span class="attendees">8/15 joined</span>
+                <span class="age-range">20-35 years</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image">
+              <div class="image-placeholder">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="event-category">Study</div>
+            </div>
+            <div class="event-content">
+              <h3>JavaScript Study Group</h3>
+              <div class="event-meta">
+                <div class="event-date">
+                  <i class="fas fa-calendar"></i>
+                  <span>Dec 20, 2024</span>
+                </div>
+                <div class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Tech Library</span>
+                </div>
+              </div>
+              <div class="event-stats">
+                <span class="attendees">6/10 joined</span>
+                <span class="age-range">22-28 years</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <div class="container">
+        <h2>How It Works</h2>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Discover Events</h3>
+            <p>Browse events by category, location, and your interests</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Join & Connect</h3>
+            <p>Join events that match your preferences and meet new people</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Create Memories</h3>
+            <p>Attend events, make friends, and create lasting memories</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="{% url 'base:discover' %}">Discover Events</a></li>
+            <li><a href="{% url 'base:create_event' %}">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="{% static 'base/main.js' %}"></script>
+</body>
+</html>

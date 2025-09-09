@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - EventHub</title>
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/contact.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="discover.html" class="nav-link">Discover</a>
+        <a href="create-event.html" class="nav-link">Create Event</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+      </div>
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <main class="contact-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>Get in Touch</h1>
+        <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-card">
+            <i class="fas fa-envelope"></i>
+            <h3>Email Us</h3>
+            <p>For general inquiries and support</p>
+            <a href="mailto:hello@eventhub.com">hello@eventhub.com</a>
+          </div>
+
+          <div class="contact-card">
+            <i class="fas fa-phone"></i>
+            <h3>Call Us</h3>
+            <p>Monday to Friday, 9AM to 6PM EST</p>
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+          </div>
+
+          <div class="contact-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Visit Us</h3>
+            <p>Our headquarters</p>
+            <address>
+              123 Innovation Street<br>
+              Tech District, NY 10001<br>
+              United States
+            </address>
+          </div>
+
+          <div class="contact-card">
+            <i class="fas fa-clock"></i>
+            <h3>Response Time</h3>
+            <p>We typically respond within</p>
+            <span class="response-time">24 hours</span>
+          </div>
+        </div>
+
+        <form class="contact-form">
+          <h2>Send us a Message</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name *</label>
+              <input type="text" id="first-name" name="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name *</label>
+              <input type="text" id="last-name" name="lastName" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <option value="general">General Inquiry</option>
+              <option value="support">Technical Support</option>
+              <option value="feedback">Feedback</option>
+              <option value="partnership">Partnership</option>
+              <option value="press">Press Inquiry</option>
+              <option value="safety">Safety Concern</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="6" placeholder="Tell us how we can help you..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="newsletter">
+              <span class="checkmark"></span>
+              I'd like to receive updates about EventHub features and events
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary btn-large">Send Message</button>
+        </form>
+      </div>
+
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>How do I create an event?</h3>
+            <p>Simply sign up for an account, click "Create Event" in the navigation, and fill out the event details form. Your event will be live once you submit it.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is EventHub free to use?</h3>
+            <p>Yes! EventHub is completely free for both event organizers and attendees. We believe in making connections accessible to everyone.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How do you ensure event safety?</h3>
+            <p>We have community guidelines, user verification systems, and a reporting mechanism. We also provide safety tips for meeting new people.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I cancel my event attendance?</h3>
+            <p>Yes, you can leave an event at any time before it starts. Just go to the event page and click "Leave Event".</p>
+          </div>
+          <div class="faq-item">
+            <h3>How do I report inappropriate behavior?</h3>
+            <p>You can report users or events using the report button on their profiles or event pages. We take all reports seriously.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I organize private events?</h3>
+            <p>Yes! When creating an event, you can set it as private and invite specific people rather than making it publicly discoverable.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="discover.html">Discover Events</a></li>
+            <li><a href="create-event.html">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

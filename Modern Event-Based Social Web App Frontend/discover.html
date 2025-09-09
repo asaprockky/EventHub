@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Events - EventHub</title>
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/discover.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="discover.html" class="nav-link active">Discover</a>
+        <a href="create-event.html" class="nav-link">Create Event</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+      </div>
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <main class="discover-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>Discover Events</h1>
+        <p>Find events that match your interests and connect with your community</p>
+      </div>
+
+      <div class="discover-content">
+        <aside class="filters-sidebar">
+          <div class="filter-section">
+            <h3>Filters</h3>
+            
+            <div class="filter-group">
+              <label>Search</label>
+              <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search events...">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Category</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" checked>
+                  <span class="checkmark"></span>
+                  Sports
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Gaming
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Study Groups
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Social
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Entertainment
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                  Outdoor
+                </label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Age Range</label>
+              <div class="range-inputs">
+                <input type="number" placeholder="Min" min="18" max="65" value="18">
+                <span>to</span>
+                <input type="number" placeholder="Max" min="18" max="65" value="35">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Gender Balance</label>
+              <select>
+                <option value="">Any</option>
+                <option value="mixed">Mixed</option>
+                <option value="male-only">Male Only</option>
+                <option value="female-only">Female Only</option>
+                <option value="balanced">Balanced (50/50)</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Location</label>
+              <div class="search-input">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" placeholder="Enter location...">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Date</label>
+              <select>
+                <option value="">Any time</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+                <option value="this-week">This week</option>
+                <option value="this-month">This month</option>
+              </select>
+            </div>
+
+            <button class="btn-primary filter-apply">Apply Filters</button>
+            <button class="btn-text filter-clear">Clear All</button>
+          </div>
+        </aside>
+
+        <div class="events-content">
+          <div class="content-header">
+            <div class="results-info">
+              <span>24 events found</span>
+            </div>
+            <div class="view-controls">
+              <div class="sort-select">
+                <select>
+                  <option value="date">Sort by Date</option>
+                  <option value="popularity">Most Popular</option>
+                  <option value="distance">Nearest</option>
+                  <option value="newest">Newest</option>
+                </select>
+              </div>
+              <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">
+                  <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="events-grid">
+            <div class="event-card">
+              <div class="event-image">
+                <div class="image-placeholder">
+                  <i class="fas fa-football-ball"></i>
+                </div>
+                <div class="event-category">Sports</div>
+                <div class="event-bookmark">
+                  <i class="far fa-heart"></i>
+                </div>
+              </div>
+              <div class="event-content">
+                <h3>Weekend Football Match</h3>
+                <div class="event-meta">
+                  <div class="event-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>Dec 15, 2024 • 3:00 PM</span>
+                  </div>
+                  <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Central Park Field</span>
+                  </div>
+                </div>
+                <div class="event-stats">
+                  <span class="attendees">12/20 joined</span>
+                  <span class="age-range">18-30 years</span>
+                  <span class="gender-balance">Mixed</span>
+                </div>
+                <div class="event-organizer">
+                  <div class="organizer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>by Alex Johnson</span>
+                </div>
+                <a href="event-details.html" class="btn-primary btn-small">View Details</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <div class="image-placeholder">
+                  <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="event-category">Gaming</div>
+                <div class="event-bookmark">
+                  <i class="far fa-heart"></i>
+                </div>
+              </div>
+              <div class="event-content">
+                <h3>Board Game Night</h3>
+                <div class="event-meta">
+                  <div class="event-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>Dec 18, 2024 • 7:00 PM</span>
+                  </div>
+                  <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Downtown Game Café</span>
+                  </div>
+                </div>
+                <div class="event-stats">
+                  <span class="attendees">8/15 joined</span>
+                  <span class="age-range">20-35 years</span>
+                  <span class="gender-balance">Mixed</span>
+                </div>
+                <div class="event-organizer">
+                  <div class="organizer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>by Sarah Chen</span>
+                </div>
+                <a href="event-details.html" class="btn-primary btn-small">View Details</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <div class="image-placeholder">
+                  <i class="fas fa-book"></i>
+                </div>
+                <div class="event-category">Study</div>
+                <div class="event-bookmark">
+                  <i class="fas fa-heart"></i>
+                </div>
+              </div>
+              <div class="event-content">
+                <h3>JavaScript Study Group</h3>
+                <div class="event-meta">
+                  <div class="event-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>Dec 20, 2024 • 6:00 PM</span>
+                  </div>
+                  <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Tech Library</span>
+                  </div>
+                </div>
+                <div class="event-stats">
+                  <span class="attendees">6/10 joined</span>
+                  <span class="age-range">22-28 years</span>
+                  <span class="gender-balance">Mixed</span>
+                </div>
+                <div class="event-organizer">
+                  <div class="organizer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>by Mike Rodriguez</span>
+                </div>
+                <a href="event-details.html" class="btn-primary btn-small">View Details</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <div class="image-placeholder">
+                  <i class="fas fa-coffee"></i>
+                </div>
+                <div class="event-category">Social</div>
+                <div class="event-bookmark">
+                  <i class="far fa-heart"></i>
+                </div>
+              </div>
+              <div class="event-content">
+                <h3>Coffee & Networking</h3>
+                <div class="event-meta">
+                  <div class="event-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>Dec 22, 2024 • 10:00 AM</span>
+                  </div>
+                  <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Brew & Co.</span>
+                  </div>
+                </div>
+                <div class="event-stats">
+                  <span class="attendees">15/25 joined</span>
+                  <span class="age-range">25-40 years</span>
+                  <span class="gender-balance">Mixed</span>
+                </div>
+                <div class="event-organizer">
+                  <div class="organizer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>by Emma Wilson</span>
+                </div>
+                <a href="event-details.html" class="btn-primary btn-small">View Details</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <div class="image-placeholder">
+                  <i class="fas fa-music"></i>
+                </div>
+                <div class="event-category">Entertainment</div>
+                <div class="event-bookmark">
+                  <i class="far fa-heart"></i>
+                </div>
+              </div>
+              <div class="event-content">
+                <h3>Live Music Night</h3>
+                <div class="event-meta">
+                  <div class="event-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>Dec 25, 2024 • 8:00 PM</span>
+                  </div>
+                  <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>The Blue Note</span>
+                  </div>
+                </div>
+                <div class="event-stats">
+                  <span class="attendees">32/50 joined</span>
+                  <span class="age-range">21-45 years</span>
+                  <span class="gender-balance">Mixed</span>
+                </div>
+                <div class="event-organizer">
+                  <div class="organizer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>by David Park</span>
+                </div>
+                <a href="event-details.html" class="btn-primary btn-small">View Details</a>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-image">
+                <div class="image-placeholder">
+                  <i class="fas fa-hiking"></i>
+                </div>
+                <div class="event-category">Outdoor</div>
+                <div class="event-bookmark">
+                  <i class="far fa-heart"></i>
+                </div>
+              </div>
+              <div class="event-content">
+                <h3>Mountain Hiking Adventure</h3>
+                <div class="event-meta">
+                  <div class="event-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>Dec 28, 2024 • 7:00 AM</span>
+                  </div>
+                  <div class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Blue Ridge Trail</span>
+                  </div>
+                </div>
+                <div class="event-stats">
+                  <span class="attendees">8/12 joined</span>
+                  <span class="age-range">20-35 years</span>
+                  <span class="gender-balance">Mixed</span>
+                </div>
+                <div class="event-organizer">
+                  <div class="organizer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <span>by Lisa Thompson</span>
+                </div>
+                <a href="event-details.html" class="btn-primary btn-small">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pagination">
+            <button class="page-btn" disabled>
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-dots">...</span>
+            <button class="page-btn">8</button>
+            <button class="page-btn">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="discover.html">Discover Events</a></li>
+            <li><a href="create-event.html">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

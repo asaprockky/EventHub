@@ -1,0 +1,309 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - EventHub</title>
+<link rel="stylesheet" href="{% static 'auth/profile.css' %}">
+<link rel="stylesheet" href="{% static 'auth/global.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="{% url 'base:main' %}" class="nav-link active">Home</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Discover</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Create Event</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="nav-auth">
+        <a href="profile.html" class="profile-link">
+          {% if user.profile.picture %}
+        <img src="{{ user.profile.picture.url }}" alt="Profile" class="profile-avatar">
+          {% else %}
+        <a href="{% url 'accounts:profile' %}">
+          <i class="fas fa-user-circle profile-icon" style="font-size:3rem;"></i>
+        </a>
+          {% endif %}
+        </a>
+      </div>
+      {% else %}
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      {% endif %}
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <main class="profile-main">
+    <div class="container">
+      <div class="profile-header">
+        <div class="profile-cover">
+          <div class="cover-placeholder">
+            <i class="fas fa-image"></i>
+          </div>
+        </div>
+         <div style="height: 100px;" ></div>
+        
+        <div class="profile-info">
+          <div class="profile-avatar">
+            <div class="avatar-placeholder">
+              <i class="fas fa-user"></i>
+            </div>
+            <button class="avatar-edit">
+              <i class="fas fa-camera"></i>
+            </button>
+          </div>
+          
+          <div class="profile-details">
+            <h1>{{ profile.name }} {{profile.surname}}</h1>
+            <p class="profile-location">
+              <i class="fas fa-map-marker-alt"></i>
+              {{ profile.location }}
+            </p>
+            <div class="profile-stats">
+              <div class="stat">
+                <span class="stat-number">{{ profile.rating }}</span>
+                <span class="stat-label">Rating</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">{{ attended_events_count }}</span>
+                <span class="stat-label">Events Attended</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">{{ event_count }}</span>
+                <span class="stat-label">Events Hosted</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-actions">
+            <button class="btn-primary">Edit Profile</button>
+            <button class="btn-secondary">Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-content">
+        <div class="main-content">
+          <section class="profile-about">
+            <h2>About</h2>
+            <p>{{ profile.bio }}</p>
+  <div class="interests">
+    <h3>Interests</h3>
+    <div class="interest-tags">
+      {% if profile and profile.interests_list %}
+        {% for interest in profile.interests_list %}
+          <span class="interest-tag">{{ interest }}</span>
+        {% endfor %}
+      {% else %}
+        <span class="interest-tag">No interests listed</span>
+      {% endif %}
+    </div>
+  </div>
+          </section>
+
+          <section class="profile-events">
+            <div class="events-tabs">
+              <button class="tab-btn active" data-tab="hosted">Hosted Events</button>
+              <button class="tab-btn" data-tab="attended">Attended Events</button>
+              <button class="tab-btn" data-tab="upcoming">Upcoming</button>
+            </div>
+
+<div class="tab-content active" id="hosted">
+    <div class="events-grid">
+        {% for event in hosted_events %}
+        <div class="event-card">
+            <div class="event-image">
+                <div class="image-placeholder">
+                    <i class="{{ event.icon }}"></i>
+                </div>
+                <div class="event-status">{{ event.status }}</div>
+            </div>
+            <div class="event-content">
+                <h3>{{ event.title }}</h3>
+                <div class="event-meta">
+                    <span><i class="fas fa-calendar"></i> {{ event.date|date:"M d, Y" }}</span>
+                    <span><i class="fas fa-users"></i> {{ event.joined_count }}/{{ event.max_count }} joined</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No hosted events yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+          </section>
+        </div>
+
+        <aside class="sidebar">
+          <div class="rating-card">
+            <h3>Rating & Reviews</h3>
+            <div class="rating-summary">
+              <div class="rating-score">
+                <span class="score">{{ profile.rating }}</span>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="review-count">24 reviews</span>
+              </div>
+            </div>
+            
+            <div class="recent-reviews">
+              <div class="review">
+                <div class="review-header">
+                  <div class="reviewer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="reviewer-info">
+                    <span class="reviewer-name">Sarah Chen</span>
+                    <div class="review-stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+                <p>"Great organizer! The football match was well-planned and everyone had a great time."</p>
+              </div>
+
+              <div class="review">
+                <div class="review-header">
+                  <div class="reviewer-avatar">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="reviewer-info">
+                    <span class="reviewer-name">Mike Rodriguez</span>
+                    <div class="review-stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+                <p>"Alex is friendly and makes everyone feel welcome. Highly recommend joining his events!"</p>
+              </div>
+            </div>
+            
+            <button class="btn-text">View all reviews</button>
+          </div>
+
+          <div class="achievements-card">
+            <h3>Achievements</h3>
+            <div class="achievements">
+              <div class="achievement">
+                <i class="fas fa-trophy"></i>
+                <div class="achievement-info">
+                  <h4>Event Master</h4>
+                  <p>Hosted 5+ successful events</p>
+                </div>
+              </div>
+              <div class="achievement">
+                <i class="fas fa-users"></i>
+                <div class="achievement-info">
+                  <h4>Community Builder</h4>
+                  <p>Brought together 100+ people</p>
+                </div>
+              </div>
+              <div class="achievement">
+                <i class="fas fa-star"></i>
+                <div class="achievement-info">
+                  <h4>Top Rated</h4>
+                  <p>Maintained 4.5+ rating</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      <div class="activity-card">
+          <h3>Recent Activity</h3>
+          <div class="activity-list">
+              {% for activity in activities %}
+                  <div class="activity-item">
+                      <i class="{{ activity.icon }}"></i>
+                      <span>{{ activity.message }}</span>
+                      <time>{{ activity.time }}</time>
+                  </div>
+              {% empty %}
+                  <p>No recent activity yet.</p>
+              {% endfor %}
+          </div>
+      </div>
+
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="discover.html">Discover Events</a></li>
+            <li><a href="create-event.html">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+          <form action="{% url 'accounts:logout' %}" method="post" style="margin-top: 16px;">
+            {% csrf_token %}
+            <button type="submit" class="btn-secondary">Sign Out</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

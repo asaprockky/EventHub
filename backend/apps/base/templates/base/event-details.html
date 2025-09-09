@@ -1,0 +1,343 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Events - EventHub</title>
+<link rel="stylesheet" href="{% static 'base/event-details.css' %}">
+<link rel="stylesheet" href="{% static 'base/global.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+ <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-calendar-alt"></i>
+        <span>EventHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="{% url 'base:main' %}" class="nav-link active">Home</a>
+        <a href="{% url 'base:discover' %}" class="nav-link">Discover</a>
+        <a href="{% url 'base:create_event' %}" class="nav-link">Create Event</a>
+        <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="nav-auth">
+        <a href="profile.html" class="profile-link">
+          {% if user.profile.picture %}
+        <img src="{{ user.profile.picture.url }}" alt="Profile" class="profile-avatar">
+          {% else %}
+        <a href="{% url 'accounts:profile' %}">
+          <i class="fas fa-user-circle profile-icon" style="font-size:3rem;"></i>
+        </a>
+          {% endif %}
+        </a>
+      </div>
+      {% else %}
+      <div class="nav-auth">
+        <a href="login.html" class="btn-secondary">Login</a>
+        <a href="signup.html" class="btn-primary">Sign Up</a>
+      </div>
+      {% endif %}
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+
+  <main class="event-details-main">
+    <div class="container">
+      <div class="event-header">
+        <div class="event-image-large">
+          <div class="image-placeholder">
+            <i class="fas fa-football-ball"></i>
+          </div>
+          <div class="event-category-badge">Sports</div>
+          <button class="bookmark-btn">
+            <i class="far fa-heart"></i>
+          </button>
+        </div>
+        
+        <div class="event-info">
+          <h1> {{ event.title }}</h1>
+          <div class="event-meta">
+            <div class="meta-item">
+              <i class="fas fa-calendar"></i>
+              <span> {{ event.date }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-clock"></i>
+              <span> {{ event.time }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span> {{ event.location }}</span>
+            </div>
+          </div>
+          
+          <div class="event-stats">
+            <div class="stat-item">
+              <span class="stat-number">12</span>
+              <span class="stat-label">Joined</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">{{ event.max_attendees }}</span>
+              <span class="stat-label">Max</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number"> {{ event.min_age }} - {{ event.max_age }} </span>
+              <span class="stat-label">Age Range</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">{{ event.gender_balance }}</span>
+              <span class="stat-label">Gender</span>
+            </div>
+          </div>
+
+          <div class="event-actions">
+        {% if has_joined %}
+          <button class="btn-secondary btn-large" disabled>✅ Already Joined</button>
+        {% else %}
+          <a href="{% url 'base:join_event' event.id %}" class="btn-primary btn-large join-btn">
+            <i class="fas fa-plus"></i> Join Event
+          </a>
+        {% endif %}
+
+            <button class="btn-secondary share-btn" onclick="copyEventLink(this)">
+              <i class="fas fa-share"></i>
+              Share
+            </button>
+            <script>
+              function copyEventLink() {
+              const link = window.location.href;
+              navigator.clipboard.writeText(link).then(function() {
+                alert('Event link copied to clipboard!');
+              }, function(err) {
+                alert('Failed to copy link');
+              });
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-content">
+        <div class="main-content">
+          <section class="event-description">
+            <h2> About This Event</h2>
+            {{ event.description }}
+          </section>
+
+          <section class="event-requirements">
+            <h2>What to Bring</h2>
+            <ul>
+              <li>Football boots or appropriate sports shoes</li>
+              <li>Water bottle</li>
+              <li>Comfortable sports clothing</li>
+              <li>Positive attitude and team spirit!</li>
+            </ul>
+          </section>
+
+          <section class="event-location">
+            <h2>Location</h2>
+            <div class="location-info">
+              <div class="location-details">
+                <h3>Central Park Field</h3>
+                <p>{{ event.location|linebreaksbr }}</p>
+                <a href="https://yandex.com/maps/?text={{ event.location|urlencode }}" target="_blank" class="directions-link">
+                  <i class="fas fa-directions"></i>
+                  Get Directions
+                </a>
+              </div>
+              <div class="map-container" style="height:300px; width:100%; border-radius:12px; overflow:hidden;">
+            <iframe
+              width="100%"
+              height="100%"
+              frameborder="0"
+              style="border:0"
+              src="https://yandex.com/map-widget/v1/?text={{ event.location|urlencode }}"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+
+            </div>
+          </section>
+
+          <section class="event-attendees">
+            <h2>Attendees ({{ attendees_count }} /{{ capacity}})</h2>
+            <div class="attendees-grid">
+              <div class="attendee-card">
+                <div class="attendee-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="attendee-info">
+                  <h4>{{ event.created_by }}</h4>
+                  <span class="organizer-badge">Organizer</span>
+                  <div class="attendee-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8</span>
+                  </div>
+                </div>
+              </div>
+            {% for attendee in attendees %}
+
+              <div class="attendee-card">
+                <div class="attendee-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="attendee-info">
+                  <h4>{{ attendee.name }} {{ attendee.surname }}</h4>
+                  <span class="attendee-age">{{ attendee.age }}</span>
+                  <div class="attendee-rating">
+                    <i class="fas fa-star"></i>
+                    <span>{{ attendee.rating }}</span>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              <div class="show-more-attendees">
+                <button class="btn-text">Show all attendees</button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="sidebar">
+          <div class="organizer-card">
+            <h3>Organizer</h3>
+            <div class="organizer-info">
+              <div class="organizer-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="organizer-details">
+                  <h4>{{ creator_profile.name }} {{ creator_profile.surname }}</h4>
+                
+                <div class="organizer-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <span>4.8 (24 reviews)</span>
+                </div>
+                <p>Football enthusiast who loves bringing people together for fun matches.</p>
+                <a href="profile.html" class="btn-secondary btn-small">View Profile</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-chat">
+            <h3>Event Chat</h3>
+            <div class="chat-preview">
+              <div class="chat-message">
+                <div class="message-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                  <span class="message-author">Sarah</span>
+                  <p>Looking forward to the match! 🏈</p>
+                </div>
+              </div>
+              <div class="chat-message">
+                <div class="message-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                  <span class="message-author">Mike</span>
+                  <p>Should we bring extra water?</p>
+                </div>
+              </div>
+              <div class="chat-message">
+                <div class="message-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                  <span class="message-author">Alex</span>
+                  <p>Good idea! I'll bring some extra bottles</p>
+                </div>
+              </div>
+            </div>
+            <button class="btn-primary btn-small chat-join">Join Chat</button>
+          </div>
+
+          <div class="similar-events">
+            <h3>Similar Events</h3>
+            <div class="similar-event">
+              <div class="similar-event-image">
+                <i class="fas fa-basketball-ball"></i>
+              </div>
+              <div class="similar-event-info">
+                <h4>Basketball Pickup Game</h4>
+                <span>Dec 18 • Sports</span>
+              </div>
+            </div>
+            <div class="similar-event">
+              <div class="similar-event-image">
+                <i class="fas fa-running"></i>
+              </div>
+              <div class="similar-event-info">
+                <h4>Morning Run Group</h4>
+                <span>Dec 20 • Fitness</span>
+              </div>
+            </div>
+            <a href="discover.html" class="btn-text">View more events</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand">
+            <i class="fas fa-calendar-alt"></i>
+            <span>EventHub</span>
+          </div>
+          <p>Connect through shared experiences and build meaningful relationships in your community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="discover.html">Discover Events</a></li>
+            <li><a href="create-event.html">Create Event</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+            <li><a href="#">Community Rules</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
